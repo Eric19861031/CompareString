@@ -12,5 +12,22 @@ def getCompareId_list(file_path):
     List = pattern.findall(all_the_text)
     return List
 
-# if __name__ == '__main__':
+
+def mkdir(path):
+    folder = os.path.exists(path)
+
+    if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
+        os.makedirs(path)  # makedirs 创建文件时如果路径不存在会创建这个路径
+        print "---  new folder...  ---"
+        print "---  OK  ---"
+
+    else:
+        print "---  There is this folder!  ---"
+
+def mkfile(path,name):
+    fullpath = path + name + '.txt'
+
+
+
+    # if __name__ == '__main__':
 #     print getCompareId_list('C:\\Program Files (x86)\\Hytera\\MDM\\MDMAdminClient\\MDMAdminClient\\CPS\\addins\\G2_CPS_Public_V2.0.08.011.plug_G2CPS_Public\\RCDB\\Json\\Description.txt')
