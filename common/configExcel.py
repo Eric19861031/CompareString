@@ -35,6 +35,26 @@ class MyExcel:
                     str2 = self.sheet.cell(row=i, column=9).value
         return str2
 
+    def get_two(self):
+        str2 = ''
+        maxValue = self.sheet.max_row
+        dictE = {}
+        listParam = []
+        for i in range(2, maxValue + 1, 1):
+            if self.sheet.cell(row=i, column=8).value is None:
+                str2 = self.sheet.cell(row=i, column=5).value
+            else:
+                str2 = self.sheet.cell(row=i, column=8).value
+            listParam.append(str2)
+            if self.sheet.cell(row=i, column=9).value is None:
+                str2 = self.sheet.cell(row=i, column=6).value
+            else:
+                str2 = self.sheet.cell(row=i, column=9).value
+            listParam.append(str2)
+            dictE[self.sheet.cell(row=i, column=4).value]=listParam
+        return dictE
+
+
     def closeOp(self):
         self.wb.close()
 
@@ -42,5 +62,5 @@ if __name__ == '__main__':
     ExcelFile = 'C:\\Program Files (x86)\\Hytera\\MDM\\MDMAdminClient\\MDMAdminClient\\CPS\\addins\\G2_CPS_Public_V2.0.08.011.plug_G2CPS_Public\\Lang_uage.xlsx'
     Demo = MyExcel(ExcelFile)
     Demo.selectSheet('Param')
-    print Demo.get_cn('1') + ' and ' + Demo.get_en('1')
+    print Demo.get_two()[1][1]
     Demo.closeOp()
