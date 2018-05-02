@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>300</width>
+    <height>250</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>CompareWin</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="JsonButton">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>30</y>
+      <width>101</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>JsonFile</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ExcelButton">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>60</y>
+      <width>101</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ExcenlFile</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="DataBaseButton">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>90</y>
+      <width>101</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DataBaseFile</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="program">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>190</y>
+      <width>101</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>comfirm</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
