@@ -39,25 +39,32 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
 
         self.JsonButton = QtGui.QPushButton(self.centralwidget)
-        self.JsonButton.setGeometry(QtCore.QRect(100, 30, 101, 23))
+        self.JsonButton.setGeometry(QtCore.QRect(100, 50, 101, 23))
         self.JsonButton.setObjectName(_fromUtf8("JsonButton"))
         self.JsonButton.clicked[bool].connect(self.Jsonfile)
-
+        self.JsonDirLable = QtGui.QLabel("none",self)
+        self.JsonDirLable.move(100,25)
 
         self.ExcelButton = QtGui.QPushButton(self.centralwidget)
-        self.ExcelButton.setGeometry(QtCore.QRect(100, 60, 101, 23))
+        self.ExcelButton.setGeometry(QtCore.QRect(100, 100, 101, 23))
         self.ExcelButton.setObjectName(_fromUtf8("ExcelButton"))
         self.ExcelButton.clicked[bool].connect(self.Excelfile)
+        self.ExcelDirLable = QtGui.QLabel("none", self)
+        self.ExcelDirLable.move(100,75)
 
         self.DataBaseButton = QtGui.QPushButton(self.centralwidget)
-        self.DataBaseButton.setGeometry(QtCore.QRect(100, 90, 101, 23))
+        self.DataBaseButton.setGeometry(QtCore.QRect(100, 150, 101, 23))
         self.DataBaseButton.setObjectName(_fromUtf8("DataBaseButton"))
         self.DataBaseButton.clicked[bool].connect(self.DataBasefile)
+        self.DataBaseDirLable = QtGui.QLabel("none", self)
+        self.DataBaseDirLable.move(100, 125)
 
         self.program = QtGui.QPushButton(self.centralwidget)
-        self.program.setGeometry(QtCore.QRect(100, 190, 101, 23))
+        self.program.setGeometry(QtCore.QRect(100, 200, 101, 23))
         self.program.setObjectName(_fromUtf8("program"))
         self.program.clicked[bool].connect(self.confirmprogram)
+        self.programStatusLable = QtGui.QLabel("none", self)
+        self.programStatusLable.move(100, 225)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtGui.QStatusBar(MainWindow)
@@ -75,19 +82,25 @@ class Ui_MainWindow(QtGui.QMainWindow):
         self.program.setText(_translate("MainWindow", "comfirm", None))
 
     def Jsonfile(self):
-        self.JsonPath = str(QtGui.QFileDialog.getOpenFileName(self,'open file'))
+        self.JsonPath = str(QtGui.QFileDialog.getOpenFileName(self,'open file',"*.txt"))
+        self.JsonDirLable.setText(self.JsonPath)
         print self.JsonPath
 
     def Excelfile(self):
-        self.ExcePath = str(QtGui.QFileDialog.getOpenFileName(self,'open file'))
+        self.ExcePath = str(QtGui.QFileDialog.getOpenFileName(self,'open file',"*.xlsx"))
+        self.ExcelDirLable.setText(self.ExcePath)
         print self.ExcePath
 
     def DataBasefile(self):
-        self.DataPath= str(QtGui.QFileDialog.getOpenFileName(self,'open file'))
+        self.DataPath= str(QtGui.QFileDialog.getOpenFileName(self,'open file',"*.sdf"))
+        self.DataBaseDirLable.setText(self.DataPath)
         print self.DataPath
 
     def confirmprogram(self):
+        self.program.setEnabled(False)
         programFunction(self.JsonPath, self.ExcePath, self.DataPath)
+        self.programStatusLable.setText('Success')
+        self.program.setEnabled(True)
 
 def Run_Gui():
     app = QtGui.QApplication(sys.argv)
