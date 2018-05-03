@@ -37,15 +37,16 @@ class MyExcel:
 
     def get_two(self):
         str2 = ''
+        str1 = ''
         maxValue = self.sheet.max_row
         dictE = {}
         listParam = []
         for i in range(2, maxValue + 1, 1):
             if self.sheet.cell(row=i, column=8).value is None:
-                str2 = self.sheet.cell(row=i, column=5).value
+                str1 = self.sheet.cell(row=i, column=5).value
             else:
-                str2 = self.sheet.cell(row=i, column=8).value
-            listParam.append(str2)
+                str1 = self.sheet.cell(row=i, column=8).value
+            listParam.append(str1)
             if self.sheet.cell(row=i, column=9).value is None:
                 str2 = self.sheet.cell(row=i, column=6).value
             else:
