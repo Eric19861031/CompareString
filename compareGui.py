@@ -9,13 +9,7 @@ import sys
 
 import time
 from PyQt4 import QtCore, QtGui
-
-from Demo import Ui_Form
-from common.configDB import MyDB
-from common.configExcel import MyExcel
-from common.configFile import Myfile
-from common.otherFunction import getCompareId_list
-# from progam import Main_program
+from progam import Ui_Form
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -122,12 +116,4 @@ class Ui_MainWindow(QtGui.QMainWindow):
         print self.DataPath
 
     def confirmprogram(self):
-        self.program.setEnabled(False)
-        Ui_Form(self.JsonPath,self.ExcePath,self.DataPath)
-        self.program.setEnabled(True)
-
-# def Run_Gui():
-#     app = QtGui.QApplication(sys.argv)
-#     win = Ui_MainWindow()
-#     win.show()
-#     app.exec_()
+        self.Ui_Form = Ui_Form(self.JsonPath, self.ExcePath, self.DataPath)
