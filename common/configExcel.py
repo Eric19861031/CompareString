@@ -59,6 +59,13 @@ class MyExcel:
     def closeOp(self):
         self.wb.close()
 
+
+# class handleExcel:
+#
+#     def __init__(self,excel_name):
+
+
+
 if __name__ == '__main__':
     ExcelFile = 'C:\\Program Files (x86)\\Hytera\\MDM\\MDMAdminClient\\MDMAdminClient\\CPS\\addins\\G2_CPS_Public_V2.0.08.011.plug_G2CPS_Public\\Lang_uage.xlsx'
     Demo = MyExcel(ExcelFile)
