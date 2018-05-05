@@ -79,7 +79,6 @@ class BigWorkThread(QtCore.QThread):
         self.ExcePath = ExcePath
         self.DataPath = DataPath
 
-    #重写 run() 函数，在里面干大事。
     def run(self):
         success, fail = 0.0, 0.0
         path = os.path.abspath('Result')

@@ -20,16 +20,22 @@ class MyDB:
         self.MyCursor = conn.cursor()
 
     def getalias_En(self,id):
-        operation_queryen = 'select convert(ntext,alias_en)as a from param where id = '
-        self.MyCursor.execute(operation_queryen+id)
-        value = self.MyCursor.fetchone()[0]
-        return value
+        try:
+            operation_queryen = 'select convert(ntext,alias_en)as a from param where id = '
+            self.MyCursor.execute(operation_queryen+id)
+            value = self.MyCursor.fetchone()[0]
+            return value
+        except:
+            return ' no value about this id '
 
     def getalias_Cn(self,id):
-        operation_queryen = 'select convert(ntext,alias_cn)as a from param where id = '
-        self.MyCursor.execute(operation_queryen+id)
-        value = self.MyCursor.fetchone()[0]
-        return value
+        try:
+            operation_queryen = 'select convert(ntext,alias_cn)as a from param where id = '
+            self.MyCursor.execute(operation_queryen+id)
+            value = self.MyCursor.fetchone()[0]
+            return value
+        except:
+            return ' no value about this id '
 
     def closeDB(self):
         """
