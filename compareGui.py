@@ -32,7 +32,8 @@ sys.setdefaultencoding('utf-8')
 
 class Ui_MainWindow(QtGui.QMainWindow):
     JsonPath,ExcePath,DataPath = '','',''
-
+    threadNum = 0
+    thread = []
 
     def __init__(self):
         super(Ui_MainWindow, self).__init__()
@@ -116,4 +117,6 @@ class Ui_MainWindow(QtGui.QMainWindow):
         print self.DataPath
 
     def confirmprogram(self):
-        self.Ui_Form = Ui_Form(self.JsonPath, self.ExcePath, self.DataPath)
+        self.thread.append(Ui_Form(self.JsonPath, self.ExcePath, self.DataPath))
+        self.Ui_Form = self.thread[self.threadNum]
+        self.threadNum += 1
