@@ -5,6 +5,7 @@ import sys
 import time
 from PyQt4 import QtCore, QtGui
 
+from common.configExcel import handleExcel
 from common.configDB import MyDB
 from common.configExcel import MyExcel
 from common.configFile import Myfile
@@ -73,6 +74,7 @@ class BigWorkThread(QtCore.QThread):
     JsonPath = ''
     ExcePath = ''
     DataPath = ''
+
     def __init__(self, JsonPath,ExcePath,DataPath,parent=None):
         super(BigWorkThread, self).__init__(parent)
         self.JsonPath = JsonPath
@@ -81,12 +83,13 @@ class BigWorkThread(QtCore.QThread):
 
     def run(self):
         success, fail = 0.0, 0.0
+        Excelrow = 2
         path = os.path.abspath('Result')
         if not os.path.isdir(path):
             os.makedirs(os.path.abspath(path))
 
-        name = '//' + time.strftime('%Y%m%d%H%M%S', time.localtime(time.time())) + 'Result'
-        type = 'txt'
+        # name = '//' + time.strftime('%Y%m%d%H%M%S', time.localtime(time.time())) + 'Result'
+        # type = 'txt'
 
         Exceloj = MyExcel(self.ExcePath)
         Exceloj.selectSheet('Param')
@@ -96,38 +99,49 @@ class BigWorkThread(QtCore.QThread):
 
         list = getCompareId_list(self.JsonPath)
         total = len(list) * 2
-        writeStream = Myfile(path, name, type)
-        writeStream.open_W()
+        # writeStream = Myfile(path, name, type)
+        # writeStream.open_W()
+        Demo = handleExcel()
 
         for id in list:
-            writeStream.file.write('ID为  ' + id + '  的中英文比对如下\n')
+            Excellist = []
+            Excellist.append(id)
+            # writeStream.file.write('ID为  ' + id + '  的中英文比对如下\n')
             if Exceloj.get_cn(id) == DBoj.getalias_Cn(id):
-                writeStream.file.write('中文比对结果：ID为' + id + ': pass' + '   ----------------------   ')
+                # writeStream.file.write('中文比对结果：ID为' + id + ': pass' + '   ----------------------   ')
+                Excellist.append(DBoj.getalias_Cn(id))
+                Excellist.append(Exceloj.get_cn(id))
+                Excellist.append('success')
                 success += 1.0
             else:
-                writeStream.file.write(
-                    '中文比对结果：ID为' + id + '；界面显示为：' + DBoj.getalias_Cn(id) + '   翻译与需求不符，需求为：' + Exceloj.get_cn(
-                        id) + '   ----------------------   ')
+                # writeStream.file.write('中文比对结果：ID为' + id + '；界面显示为：' + DBoj.getalias_Cn(id) + '   翻译与需求不符，需求为：' + Exceloj.get_cn(id) + '   ----------------------   ')
+                Excellist.append(DBoj.getalias_Cn(id))
+                Excellist.append(Exceloj.get_cn(id))
+                Excellist.append('fail')
                 fail += 1.0
 
             if Exceloj.get_en(id) == DBoj.getalias_En(id):
-                writeStream.file.write('英文比对结果：ID为' + id + ': pass' + '\n')
+                # writeStream.file.write('英文比对结果：ID为' + id + ': pass' + '\n')
+                Excellist.append(DBoj.getalias_En(id))
+                Excellist.append(Exceloj.get_en(id))
+                Excellist.append('success')
                 success += 1.0
             else:
-                writeStream.file.write(
-                    '英文比对结果：ID为' + id + '；界面显示为：' + DBoj.getalias_En(id) + '   翻译与需求不符，需求为：' + Exceloj.get_en(
-                        id) + '\n')
+                # writeStream.file.write('英文比对结果：ID为' + id + '；界面显示为：' + DBoj.getalias_En(id) + '   翻译与需求不符，需求为：' + Exceloj.get_en(id) + '\n')
+                Excellist.append(DBoj.getalias_En(id))
+                Excellist.append(Exceloj.get_en(id))
+                Excellist.append('fail')
                 fail += 1.0
 
             if (success + fail) / total >= 100:
                 self.program.setText('completed')
             val = (success + fail) * 100 / total
             self.emit(QtCore.SIGNAL('progressVal'),val)
+            Demo.addcontent(Excelrow,Excellist)
+            Excelrow += 1
 
-        writeStream.file.write(
-            '结论：总数 ：' + str(total) + ' ； 成功数目 ：' + str(success) + '； 失败数目 ：' + str(fail) + '； 成功率 ：' + str(
-                success / total))
-
+        # writeStream.file.write('结论：总数 ：' + str(total) + ' ； 成功数目 ：' + str(success) + '； 失败数目 ：' + str(fail) + '； 成功率 ：' + str(success / total))
+        Demo.saveFile(time.strftime('%Y%m%d%H%M%S', time.localtime(time.time())))
         DBoj.closeDB()
         Exceloj.closeOp()
         self.emit(QtCore.SIGNAL('closesignal'))

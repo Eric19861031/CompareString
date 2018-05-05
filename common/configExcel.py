@@ -2,6 +2,8 @@
 #!coding:utf8
 
 import openpyxl as op
+from openpyxl import Workbook
+
 
 class MyExcel:
     wb = None
@@ -59,10 +61,29 @@ class MyExcel:
     def closeOp(self):
         self.wb.close()
 
+class handleExcel:
+    wb = None
+    ws = None
+    keys = [u'id', u'显示-中文', u'需求-中文', u'中文比对结果', u'显示-英文', u'需求-英文', u'英文比对结果']
+
+    def __init__(self):
+        x = 0
+        self.wb = Workbook()
+        self.ws = self.wb.active
+        for x in range(0, len(self.keys)):
+            self.ws.cell(row=1, column=x + 1).value = self.keys[x]
+
+    def addcontent(self, rowline, list):
+        for x in range(0, len(list)):
+            self.ws.cell(row=rowline, column=x + 1).value = list[x]
+
+    def saveFile(self, filename):
+        self.wb.save('Result' + '//' + filename + '.xlsx')
 
 # class handleExcel:
 #
 #     def __init__(self,excel_name):
+#         Workbook()
 
 
 
