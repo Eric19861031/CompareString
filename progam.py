@@ -82,8 +82,10 @@ class BigWorkThread(QtCore.QThread):
     #重写 run() 函数，在里面干大事。
     def run(self):
         success, fail = 0.0, 0.0
-
         path = os.path.abspath('Result')
+        if not os.path.isdir(path):
+            os.makedirs(os.path.abspath(path))
+
         name = '//' + time.strftime('%Y%m%d%H%M%S', time.localtime(time.time())) + 'Result'
         type = 'txt'
 
