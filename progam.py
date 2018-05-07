@@ -41,33 +41,41 @@ class Ui_Form(QtGui.QMainWindow):
         self.ExcePath = ExcePath
         self.DataPath = DataPath
         self.setupUi(self)
-        # app = QtGui.QApplication(sys.argv)
         self.show()
         self.Thread = BigWorkThread(self.JsonPath,self.ExcePath,self.DataPath)
         self.Thread.start()
         self.connect(self.Thread,QtCore.SIGNAL('progressVal'),self.progressBar)
-        self.connect(self.Thread,QtCore.SIGNAL('closesignal'),self.close_Progress)
-        # app.exec_()
+        self.connect(self.Thread,QtCore.SIGNAL('closesignal'),self.close_comfirm)
 
     def setupUi(self, Form):
-        Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(312, 62)
+        # Form.setObjectName(_fromUtf8("Form"))
+        # Form.setWindowIcon(QtGui.QIcon('logo.png'))
+
+        self.setWindowTitle('progress')
+        self.setWindowIcon(QtGui.QIcon('logo.png'))
+        self.resize(312, 62)
         self.progress = QtGui.QProgressBar(Form)
         self.progress.setGeometry(QtCore.QRect(10, 20, 301, 23))
         self.progress.setProperty("value", 0)
         self.progress.setObjectName(_fromUtf8("progressBar"))
 
-        self.retranslateUi(Form)
+        # self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def retranslateUi(self, Form):
-        Form.setWindowTitle(_translate("Form", "progress", None))
+    # def retranslateUi(self, Form):
+    #     Form.setWindowTitle(_translate("Form", "progress", None))
+    #     Form.setWindowIcon(QtGui.QIcon('F:\\Python Practice\\CompareString\\logo.png'))
 
     def progressBar(self,val):
         self.progress.setValue(val)
 
-    def close_Progress(self):
-        self.close()
+    # def close_Progress(self):
+    #     self.close()
+
+    def close_comfirm(self):
+        ccomfirm = QtGui.QMessageBox.question(self,'comfirm','Your Task has completed!',QtGui.QMessageBox.Yes)
+        if ccomfirm == QtGui.QMessageBox.Yes:
+            self.close()
 
 class BigWorkThread(QtCore.QThread):
     """docstring for BigWorkThread"""
@@ -90,7 +98,6 @@ class BigWorkThread(QtCore.QThread):
 
         # name = '//' + time.strftime('%Y%m%d%H%M%S', time.localtime(time.time())) + 'Result'
         # type = 'txt'
-
         Exceloj = MyExcel(self.ExcePath)
         Exceloj.selectSheet('Param')
 
@@ -151,7 +158,7 @@ class BigWorkThread(QtCore.QThread):
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
     win = Ui_Form('C:\\Program Files (x86)\\Hytera\\MDM\\MDMAdminClient\\MDMAdminClient\\CPS\\addins\\G2_CPS_Public_V2.0.08.011.plug_G2CPS_Public\\RCDB\\Json\\Description.txt',
-                  'C:\\Program Files (x86)\\Hytera\\MDM\\MDMAdminClient\\MDMAdminClient\\CPS\\addins\\G2_CPS_Public_V2.0.08.011.plug_G2CPS_Public\\Lang_uage.xlsx',
+                  'F:\\Python Practice\\CompareString\\Demofile\\language_En_Cn.xlsx',
                   'C:\\Program Files (x86)\\Hytera\\MDM\\MDMAdminClient\\MDMAdminClient\\CPS\\addins\\G2_CPS_Public_V2.0.08.011.plug_G2CPS_Public\\XMLToolCompactData.sdf;')
 
     app.exec_()
